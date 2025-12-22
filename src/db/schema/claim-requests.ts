@@ -10,7 +10,7 @@ export const claimRequests = pgTable("claim_requests", {
 		.references(() => foundItems.id, { onDelete: "cascade" }),
 
 	claimantName: varchar("claimant_name", { length: 100 }).notNull(),
-	claimantNim: varchar("claimant_nim", { length: 20 }).notNull(),
+	claimantNim: varchar("claimant_nim", { length: 20 }),
 	contactPhone: varchar("contact_phone", { length: 20 }).notNull(),
 
 	ownershipProofText: text("ownership_proof_text").notNull(),

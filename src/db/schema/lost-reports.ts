@@ -7,7 +7,7 @@ export const lostReports = pgTable("lost_reports", {
 
 	reporterName: varchar("reporter_name", { length: 100 }).notNull(),
 	reporterContact: varchar("reporter_contact", { length: 20 }).notNull(),
-	reporterNim: varchar("reporter_nim", { length: 20 }).notNull(),
+	reporterNim: varchar("reporter_nim", { length: 20 }),
 
 	itemName: varchar("item_name", { length: 255 }).notNull(),
 	itemDescription: text("item_description").notNull(),
