@@ -1,12 +1,10 @@
 import { Elysia, t } from "elysia";
 import { fromTypes, openapi } from "@elysiajs/openapi";
 
-import betterAuthView from "@/backend/utils/better-auth";
-import { AuthDocs } from "@/backend/utils/better-auth/docs";
-
-import baseRoute from "@/backend/modules/base";
-
-const authDocs = await AuthDocs();
+import foundItemsModule from "@/backend/modules/found-items";
+import lostReportsModule from "@/backend/modules/lost-reports";
+import claimRequestsModule from "@/backend/modules/claim-requests";
+import adminUsersModule from "@/backend/modules/admin-users";
 
 export const app = new Elysia({ prefix: "/api" })
 	.use(
@@ -15,7 +13,7 @@ export const app = new Elysia({ prefix: "/api" })
 			references: fromTypes("route.ts"),
 			documentation: {
 				info: {
-					title: "Zendriva Starter Kit",
+					title: "OSTRIC Labs API",
 					version: "alpha 0.0.1",
 					description: "Automatically generated documentation and testing for easier development.",
 				},
@@ -28,10 +26,10 @@ export const app = new Elysia({ prefix: "/api" })
 		}),
 	)
 
-	/* AUTH */
-	.all("/auth/*", betterAuthView, { detail: { hide: true } })
-
-	.use(baseRoute);
+	.use(foundItemsModule)
+	.use(lostReportsModule)
+	.use(claimRequestsModule)
+	.use(adminUsersModule);
 
 export type app = typeof app;
 
