@@ -26,7 +26,7 @@ export default async function FoundItemsPage() {
                     </div>
                     <Link
                         href="/found/report"
-                        className="inline-flex items-center justify-center gap-2 px-6 py-3 text-sm font-medium text-black bg-primary rounded-xl hover:bg-primary-hover transition-all duration-200"
+                        className="inline-flex items-center justify-center gap-2 px-6 py-3 text-sm font-medium text-background bg-primary rounded-xl hover:bg-primary-hover transition-all duration-200"
                     >
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
