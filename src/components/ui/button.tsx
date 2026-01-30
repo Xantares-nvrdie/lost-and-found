@@ -9,20 +9,20 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 	({ className = "", variant = "primary", size = "md", isLoading, children, disabled, ...props }, ref) => {
 		const baseStyles =
-			"inline-flex items-center justify-center font-medium rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed";
+			"inline-flex items-center justify-center font-medium rounded-full transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed";
 
 		const variants = {
-			primary: "bg-primary text-white hover:bg-primary-hover focus:ring-primary",
-			secondary: "bg-secondary text-white hover:bg-secondary-hover focus:ring-secondary",
-			outline: "border-2 border-primary text-primary hover:bg-primary hover:text-white focus:ring-primary",
-			ghost: "text-foreground hover:bg-border focus:ring-border",
-			danger: "bg-error text-white hover:opacity-90 focus:ring-error",
+			primary: "bg-foreground text-background hover:opacity-90 focus-visible:ring-foreground",
+			secondary: "bg-primary-light text-foreground hover:bg-border focus-visible:ring-border",
+			outline: "border border-border text-foreground hover:bg-primary-light focus-visible:ring-border",
+			ghost: "text-muted hover:text-foreground hover:bg-primary-light focus-visible:ring-border",
+			danger: "bg-error text-white hover:opacity-90 focus-visible:ring-error",
 		};
 
 		const sizes = {
-			sm: "px-3 py-1.5 text-sm",
-			md: "px-4 py-2 text-base",
-			lg: "px-6 py-3 text-lg",
+			sm: "px-3 py-1.5 text-xs",
+			md: "px-4 py-2 text-sm",
+			lg: "px-6 py-2.5 text-sm",
 		};
 
 		return (
@@ -34,7 +34,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 			>
 				{isLoading && (
 					<svg
-						className="animate-spin -ml-1 mr-2 h-4 w-4"
+						className="animate-spin -ml-1 mr-2 h-3.5 w-3.5"
 						xmlns="http://www.w3.org/2000/svg"
 						fill="none"
 						viewBox="0 0 24 24"

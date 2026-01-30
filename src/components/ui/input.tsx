@@ -11,18 +11,18 @@ const Input = forwardRef<HTMLInputElement, InputProps>(({ className = "", label,
     return (
         <div className="w-full">
             {label && (
-                <label htmlFor={inputId} className="block text-sm font-medium text-foreground mb-1.5">
+                <label htmlFor={inputId} className="block text-sm text-foreground mb-2">
                     {label}
                 </label>
             )}
             <input
                 ref={ref}
                 id={inputId}
-                className={`w-full px-4 py-2.5 rounded-lg border bg-card text-foreground placeholder:text-muted transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent ${error ? "border-error" : "border-border"
+                className={`w-full px-3 py-2 rounded-lg border bg-background text-foreground placeholder:text-muted text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent ${error ? "border-error" : "border-border"
                     } ${className}`}
                 {...props}
             />
-            {error && <p className="mt-1.5 text-sm text-error">{error}</p>}
+            {error && <p className="mt-1.5 text-xs text-error">{error}</p>}
         </div>
     );
 });
@@ -41,19 +41,19 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
         return (
             <div className="w-full">
                 {label && (
-                    <label htmlFor={textareaId} className="block text-sm font-medium text-foreground mb-1.5">
+                    <label htmlFor={textareaId} className="block text-sm text-foreground mb-2">
                         {label}
                     </label>
                 )}
                 <textarea
                     ref={ref}
                     id={textareaId}
-                    className={`w-full px-4 py-2.5 rounded-lg border bg-card text-foreground placeholder:text-muted transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent resize-none ${error ? "border-error" : "border-border"
+                    className={`w-full px-3 py-2 rounded-lg border bg-background text-foreground placeholder:text-muted text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent resize-none ${error ? "border-error" : "border-border"
                         } ${className}`}
                     rows={4}
                     {...props}
                 />
-                {error && <p className="mt-1.5 text-sm text-error">{error}</p>}
+                {error && <p className="mt-1.5 text-xs text-error">{error}</p>}
             </div>
         );
     }
@@ -74,14 +74,14 @@ const Select = forwardRef<HTMLSelectElement, SelectProps>(
         return (
             <div className="w-full">
                 {label && (
-                    <label htmlFor={selectId} className="block text-sm font-medium text-foreground mb-1.5">
+                    <label htmlFor={selectId} className="block text-sm text-foreground mb-2">
                         {label}
                     </label>
                 )}
                 <select
                     ref={ref}
                     id={selectId}
-                    className={`w-full px-4 py-2.5 rounded-lg border bg-card text-foreground transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent ${error ? "border-error" : "border-border"
+                    className={`w-full px-3 py-2 rounded-lg border bg-background text-foreground text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent ${error ? "border-error" : "border-border"
                         } ${className}`}
                     {...props}
                 >
@@ -91,7 +91,7 @@ const Select = forwardRef<HTMLSelectElement, SelectProps>(
                         </option>
                     ))}
                 </select>
-                {error && <p className="mt-1.5 text-sm text-error">{error}</p>}
+                {error && <p className="mt-1.5 text-xs text-error">{error}</p>}
             </div>
         );
     }
