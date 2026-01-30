@@ -78,7 +78,7 @@ const lostReportsModule = new Elysia({ prefix: "/lost-reports", tags: ["Lost Rep
 	)
 
 	.delete(
-		"/id:",
+		"/:id",
 		async ({ params, set }) => {
 			await deleteLostReport(Number(params.id));
 

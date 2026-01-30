@@ -10,6 +10,7 @@
 		"format": "biome format --write"
 	},
 	"dependencies": {
+		"@elysiajs/eden": "^1.4.6",
 		"@elysiajs/openapi": "^1.4.11",
 		"bcryptjs": "^3.0.3",
 		"better-auth": "^1.4.7",
