@@ -3,7 +3,7 @@ import bcrypt from "bcryptjs";
 import { db } from "@/db";
 import { adminUsers } from "@/db/schema/admin-users";
 import { eq } from "drizzle-orm";
-
+// bunx tsx src / scripts / seed - admin.ts
 async function seedAdmin() {
 	const username = "admin";
 	const password = "admin123";
