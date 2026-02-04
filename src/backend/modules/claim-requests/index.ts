@@ -1,11 +1,5 @@
 import { Elysia, t } from "elysia";
-import {
-	createClaimRequest,
-	getAllClaimRequests,
-	getClaimRequestsById,
-	updateClaimRequestStatus,
-	deleteClaimRequest,
-} from "./service";
+import { ClaimRequestService } from "./service";
 import { ClaimRequest } from "./model";
 import { adminOnly } from "@/backend/utils/admin-middleware";
 
@@ -13,7 +7,7 @@ const claimRequestsModule = new Elysia({ prefix: "/claim-requests", tags: ["Clai
 	.get(
 		"/",
 		async () => {
-			return await getAllClaimRequests();
+			return await ClaimRequestService.getAll();
 		},
 		{
 			detail: {
@@ -26,7 +20,7 @@ const claimRequestsModule = new Elysia({ prefix: "/claim-requests", tags: ["Clai
 	.get(
 		"/:id",
 		async ({ params, set }) => {
-			const data = await getClaimRequestsById(Number(params.id));
+			const data = await ClaimRequestService.getById(Number(params.id));
 			if (!data) {
 				set.status = 404;
 				return { message: "Claim request not found" };
@@ -44,7 +38,7 @@ const claimRequestsModule = new Elysia({ prefix: "/claim-requests", tags: ["Clai
 	.post(
 		"/",
 		async ({ body, set }) => {
-			await createClaimRequest(body);
+			await ClaimRequestService.create(body);
 			set.status = 201;
 			return { message: "Claim request created successfully" };
 		},
@@ -60,7 +54,7 @@ const claimRequestsModule = new Elysia({ prefix: "/claim-requests", tags: ["Clai
 	.patch(
 		"/:id/status",
 		async ({ params, body }) => {
-			await updateClaimRequestStatus(Number(params.id), body.status);
+			await ClaimRequestService.updateStatus(Number(params.id), body.status);
 			return { message: "Status updated successfully" };
 		},
 		{
@@ -79,7 +73,7 @@ const claimRequestsModule = new Elysia({ prefix: "/claim-requests", tags: ["Clai
 	.delete(
 		"/:id",
 		async ({ params, set }) => {
-			await deleteClaimRequest(Number(params.id));
+			await ClaimRequestService.delete(Number(params.id));
 			set.status = 204;
 			return null;
 		},

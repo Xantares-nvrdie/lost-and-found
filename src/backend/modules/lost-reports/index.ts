@@ -1,11 +1,5 @@
 import { Elysia, t } from "elysia";
-import {
-	createLostReport,
-	deleteLostReport,
-	getAllLostReports,
-	getLostReportsById,
-	updateLostReportStatus,
-} from "./service";
+import { LostReportService } from "./service";
 import { LostReport } from "./model";
 import { adminOnly } from "@/backend/utils/admin-middleware";
 
@@ -13,7 +7,7 @@ const lostReportsModule = new Elysia({ prefix: "/lost-reports", tags: ["Lost Rep
 	.get(
 		"/",
 		async () => {
-			return await getAllLostReports();
+			return await LostReportService.getAll();
 		},
 		{
 			detail: {
@@ -26,7 +20,7 @@ const lostReportsModule = new Elysia({ prefix: "/lost-reports", tags: ["Lost Rep
 	.get(
 		"/:id",
 		async ({ params, set }) => {
-			const data = await getLostReportsById(Number(params.id));
+			const data = await LostReportService.getById(Number(params.id));
 			if (!data) {
 				set.status = 404;
 				return { message: "Lost report not found" };
@@ -44,7 +38,7 @@ const lostReportsModule = new Elysia({ prefix: "/lost-reports", tags: ["Lost Rep
 	.post(
 		"/",
 		async ({ body, set }) => {
-			await createLostReport(body);
+			await LostReportService.create(body);
 
 			set.status = 201;
 			return { message: "Lost report created successfully" };
@@ -61,7 +55,7 @@ const lostReportsModule = new Elysia({ prefix: "/lost-reports", tags: ["Lost Rep
 	.patch(
 		"/:id/status",
 		async ({ params, body, set }) => {
-			await updateLostReportStatus(Number(params.id), body.status);
+			await LostReportService.updateStatus(Number(params.id), body.status);
 			return { message: "Status updated successfully" };
 		},
 		{
@@ -80,7 +74,7 @@ const lostReportsModule = new Elysia({ prefix: "/lost-reports", tags: ["Lost Rep
 	.delete(
 		"/:id",
 		async ({ params, set }) => {
-			await deleteLostReport(Number(params.id));
+			await LostReportService.delete(Number(params.id));
 
 			set.status = 204;
 			return null;

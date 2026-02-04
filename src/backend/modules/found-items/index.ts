@@ -1,11 +1,5 @@
 import { Elysia, t } from "elysia";
-import {
-	createFoundItem,
-	deleteFoundItem,
-	getAllFoundItems,
-	getFoundItemsById,
-	updateFoundItemStatus,
-} from "./service";
+import { FoundItemService } from "./service";
 import { FoundItem } from "./model";
 import { adminOnly } from "@/backend/utils/admin-middleware";
 
@@ -13,7 +7,7 @@ const foundItemsModule = new Elysia({ prefix: "/found-items", tags: ["Found Item
 	.get(
 		"/",
 		async () => {
-			return await getAllFoundItems();
+			return await FoundItemService.getAll();
 		},
 		{
 			detail: {
@@ -26,7 +20,7 @@ const foundItemsModule = new Elysia({ prefix: "/found-items", tags: ["Found Item
 	.get(
 		"/:id",
 		async ({ params, set }) => {
-			const data = await getFoundItemsById(Number(params.id));
+			const data = await FoundItemService.getById(Number(params.id));
 			if (!data) {
 				set.status = 404;
 				return { message: "Found item data not found" };
@@ -44,7 +38,7 @@ const foundItemsModule = new Elysia({ prefix: "/found-items", tags: ["Found Item
 	.post(
 		"/",
 		async ({ body, set }) => {
-			await createFoundItem(body);
+			await FoundItemService.create(body);
 			set.status = 201;
 			return { message: "Found item data created successfully" };
 		},
@@ -60,7 +54,7 @@ const foundItemsModule = new Elysia({ prefix: "/found-items", tags: ["Found Item
 	.patch(
 		"/:id/status",
 		async ({ params, body, set }) => {
-			await updateFoundItemStatus(Number(params.id), body.status);
+			await FoundItemService.updateStatus(Number(params.id), body.status);
 			return { message: "Status updated successfully" };
 		},
 		{
@@ -79,7 +73,7 @@ const foundItemsModule = new Elysia({ prefix: "/found-items", tags: ["Found Item
 	.delete(
 		"/:id",
 		async ({ params, set }) => {
-			await deleteFoundItem(Number(params.id));
+			await FoundItemService.delete(Number(params.id));
 			set.status = 204;
 			return null;
 		},

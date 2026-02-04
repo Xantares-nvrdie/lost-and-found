@@ -1,5 +1,5 @@
 import { Elysia, t } from "elysia";
-import { loginAdmin, createAdminUser, deleteAdminUser } from "./service";
+import {AdminUserService} from "./service";
 import { AdminUser } from "./model";
 import { adminOnly } from "@/backend/utils/admin-middleware";
 
@@ -8,7 +8,7 @@ const adminUsersModule = new Elysia({ prefix: "/admin-users", tags: ["Admin User
 	.post(
 		"/login",
 		async ({ body, set }) => {
-			const result = await loginAdmin(body.username, body.password);
+			const result = await AdminUserService.login(body.username, body.password);
 
 			if (!result) {
 				set.status = 401;
@@ -29,7 +29,7 @@ const adminUsersModule = new Elysia({ prefix: "/admin-users", tags: ["Admin User
 	.post(
 		"/",
 		async ({ body, set }) => {
-			await createAdminUser(body.username, body.password);
+			await AdminUserService.create(body.username, body.password);
 			set.status = 201;
 			return { message: "Admin user created successfully" };
 		},
@@ -46,7 +46,7 @@ const adminUsersModule = new Elysia({ prefix: "/admin-users", tags: ["Admin User
 	.delete(
 		"/:id",
 		async ({ params, set }) => {
-			await deleteAdminUser(Number(params.id));
+			await AdminUserService.delete(Number(params.id));
 			set.status = 204;
 			return null;
 		},
