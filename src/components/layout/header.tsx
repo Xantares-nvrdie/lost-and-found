@@ -10,6 +10,7 @@ function Header() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     const navLinks = [
+        { href: "/", label: "Beranda" },
         { href: "/lost", label: "Barang Hilang" },
         { href: "/found", label: "Barang Temuan" },
     ];

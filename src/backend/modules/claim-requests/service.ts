@@ -3,27 +3,29 @@ import { claimRequests } from "@/db/schema";
 import type { ClaimRequest } from "./model";
 import { eq } from "drizzle-orm";
 
-export async function createClaimRequest(data: ClaimRequest.createInput) {
-	await db.insert(claimRequests).values({
-		...data,
-		status: "PENDING",
-	});
-}
+export abstract class ClaimRequestService {
+	static async create(data: ClaimRequest.createInput) {
+		await db.insert(claimRequests).values({
+			...data,
+			status: "PENDING",
+		});
+	}
 
-export async function getAllClaimRequests() {
-	return db.select().from(claimRequests);
-}
+	static async getAll() {
+		return db.select().from(claimRequests);
+	}
+	
+	static async getById(id: number){
+		return db.query.claimRequests.findFirst({
+			where: (cr, { eq }) => eq(cr.id, id),
+		});
+	}
 
-export async function getClaimRequestsById(id: number) {
-	return db.query.claimRequests.findFirst({
-		where: (cr, { eq }) => eq(cr.id, id),
-	});
-}
+	static async updateStatus(id: number, status: ClaimRequest.updateStatusInput["status"]){
+		await db.update(claimRequests).set({status}).where(eq(claimRequests.id, id));
+	}
 
-export async function updateClaimRequestStatus(id: number, status: ClaimRequest.updateStatusInput["status"]) {
-	await db.update(claimRequests).set({ status }).where(eq(claimRequests.id, id));
-}
-
-export async function deleteClaimRequest(id: number) {
-	await db.delete(claimRequests).where(eq(claimRequests.id, id));
+	static async delete(id: number){
+		await db.delete(claimRequests).where(eq(claimRequests.id, id));
+	}
 }

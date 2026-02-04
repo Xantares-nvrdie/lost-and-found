@@ -3,24 +3,27 @@ import { FoundItem } from "./model";
 import { foundItems } from "@/db/schema";
 import { eq } from "drizzle-orm";
 
-export async function createFoundItem(data: FoundItem.createInput) {
-	await db.insert(foundItems).values(data);
-}
 
-export async function getAllFoundItems() {
-	return db.select().from(foundItems);
-}
+export abstract class FoundItemService {
+	static async create(data: FoundItem.createInput) {
+		await db.insert(foundItems).values(data);
+	}
 
-export async function getFoundItemsById(id: number) {
-	return db.query.foundItems.findFirst({
-		where: (fi, { eq }) => eq(fi.id, id),
-	});
-}
+	static async getAll() {
+		return db.select().from(foundItems);
+	}
 
-export async function updateFoundItemStatus(id: number, status: FoundItem.updateStatusInput["status"]) {
-	await db.update(foundItems).set({ status }).where(eq(foundItems.id, id));
-}
+	static async getById(id: number) {
+		return db.query.foundItems.findFirst({
+			where: (fi, { eq }) => eq(fi.id, id),
+		});
+	}
 
-export async function deleteFoundItem(id: number) {
-	await db.delete(foundItems).where(eq(foundItems.id, id));
+	static async updateStatus(id: number, status: FoundItem.updateStatusInput["status"]) {
+		await db.update(foundItems).set({ status }).where(eq(foundItems.id, id));
+	}
+
+	static async delete(id: number) {
+		await db.delete(foundItems).where(eq(foundItems.id, id));
+	}
 }
