@@ -14,7 +14,7 @@
 	--success: #16a34a;
 	--border: oklch(0.922 0 0);
 	--card: oklch(1 0 0);
-	--muted: oklch(0.97 0 0);
+	--muted: oklch(0.556 0 0);
 	--shape-color: #18181b;
 	--radius: 0.625rem;
 	--background: oklch(1 0 0);
@@ -148,6 +148,8 @@ body {
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	overflow-x: hidden;
+	color: var(--foreground);
+	background-color: var(--background);
 }
 
 .container {

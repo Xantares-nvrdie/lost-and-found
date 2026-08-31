@@ -48,13 +48,11 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
         setTheme(theme === "light" ? "dark" : "light");
     };
 
-    // Prevent flash of wrong theme
-    if (!mounted) {
-        return null;
-    }
-
+    // Always render children to avoid hydration mismatch.
+    // The inline script in layout.tsx already sets the correct class on <html>
+    // before React hydrates, so there's no flash of wrong theme.
     return (
-        <ThemeContext.Provider value={{ theme, toggleTheme, setTheme }}>
+        <ThemeContext.Provider value={{ theme: mounted ? theme : "light", toggleTheme, setTheme }}>
             {children}
         </ThemeContext.Provider>
     );
