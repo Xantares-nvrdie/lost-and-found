@@ -14,17 +14,34 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
     useEffect(() => {
         const token = localStorage.getItem("admin_token");
-        if (!token && !isLoginPage) {
-            router.push("/admin/login");
-        } else if (token) {
-            setIsAuthenticated(true);
+
+        // Tidak punya token
+        if (!token) {
+            setIsAuthenticated(false);
+
+            if (!isLoginPage) {
+                router.replace("/admin/login");
+            }
+
+            setIsLoading(false);
+            return;
         }
+
+        // Punya token
+        setIsAuthenticated(true);
+
+        // Sudah login tapi membuka /admin/login
+        if (isLoginPage) {
+            router.replace("/admin");
+            return;
+        }
+
         setIsLoading(false);
-    }, [router, isLoginPage]);
+    }, [isLoginPage, router]);
 
     const handleLogout = () => {
         localStorage.removeItem("admin_token");
-        router.push("/admin/login");
+        router.replace("/admin/login");
     };
 
     const navLinks = [
